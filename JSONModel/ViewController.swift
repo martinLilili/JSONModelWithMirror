@@ -28,7 +28,7 @@ class Student: User {
     var accountID : Int = 0
 }
 
-class SchoolStudent: JSONModel {
+class SchoolStudent: Student {
     var schoolName : String?
     var schoolmates : [Student]?
     var principal : User?
