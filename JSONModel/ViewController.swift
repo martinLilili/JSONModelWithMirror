@@ -31,7 +31,7 @@ class Student: User {
 class SchoolStudent: JSONModel {
     var schoolName : String?
     var schoolmates : [Student]?
-    var father : User?
+    var principal : User?
 }
 
 
@@ -42,9 +42,21 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        testUser()
+//        testUser()
+//        
+//        testStudent()
         
-        testStudent()
+        var any: Any
+//        any = nil
+        
+        var op : String?
+        op = nil
+        
+        any = op
+        
+        print(any)
+        print(any == nil)
+        
         
         testSchoolStudent()
     }
@@ -85,32 +97,32 @@ class ViewController: UIViewController {
     }
     
     func testSchoolStudent() {
-        //创建一个User实例对象
+        //创建一个schoolstudent实例对象
         let schoolstudent = SchoolStudent()
-        schoolstudent.schoolName = "beijing"
+        schoolstudent.schoolName = "清华大学"
         
-        let father = User()
-        father.name = "adsdasd"
-        father.age = 200
-        father.emails = ["hangge@hangge.com","system@hangge.com"]
-        schoolstudent.father = father
+        let principal = User()
+        principal.name = "校长"
+        principal.age = 60
+        principal.emails = ["zhang@hangge.com","xiao@hangge.com"]
+        schoolstudent.principal = principal
         
         let student1 = Student()
         student1.accountID = 2009
-        student1.name = "hangge"
-        student1.age = 100
-        student1.emails = ["hangge@hangge.com","system@hangge.com"]
-        //添加动画
+        student1.name = "martin"
+        student1.age = 25
+        student1.emails = ["martin1@hangge.com","martin2@hangge.com"]
+//        //添加手机
 //        let tel1 = Telephone(title: "手机", number: "123456")
 //        let tel2 = Telephone(title: "公司座机", number: "001-0358")
 //        student1.tels = [tel1, tel2]
         
         let student2 = Student()
         student2.accountID = 2008
-        student2.name = "aaaaaa"
-        student2.age = 50
-        student2.emails = ["asdgge@hangge.com","dsdsdm@hangge.com"]
-        //添加动画
+        student2.name = "james"
+        student2.age = 26
+        student2.emails = ["james1@hangge.com","james2@hangge.com"]
+//        //添加手机
 //        let tel3 = Telephone(title: "手机", number: "123456")
 //        let tel4 = Telephone(title: "公司座机", number: "001-0358")
 //        student2.tels = [tel3, tel4]
@@ -122,7 +134,7 @@ class ViewController: UIViewController {
         
         let a = NSKeyedArchiver.archivedData(withRootObject: schoolstudent)
         let b = NSKeyedUnarchiver.unarchiveObject(with: a)
-        print(b)
+        print("unarchiveObject = \(b)")
         
     }
     

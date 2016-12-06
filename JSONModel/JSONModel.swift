@@ -25,22 +25,35 @@ extension Dictionary {
 //MARK: - JSON协议
 //自定义一个JSON协议
 protocol JSON {
+    
+    /// 如果是对象实现了JSON协议，这个方法返回对象属性及其value的dic，注意如果某个value不是基础数据类型，会一直向下解析直到基础数据类型为止，另外可选类型和数组需要单独处理
+    /// 如果是基础数据类型实现了JSON协议，只返回他们自己
+    /// - Returns: 对于对象返回dic，对于基础数据类型，返回他们自己
     func toJSONModel() -> AnyObject?
+    
+    /// 生成JSON字符串
+    ///
+    /// - Returns: 字符串
     func toJSONString() -> String
 }
 
 //扩展协议方法
 extension JSON {
     
+    
+    /// 使用mirror遍历所有的属性，并保存与dic中，如果属性的value不是基础类型，则一直向下解析直到基础类型，另外可选类型和数组需要单独处理
+    ///
+    /// - Parameter mir: mirror
+    /// - Returns: dic
     func getResultFromMirror(mir : Mirror) -> [String:AnyObject] {
         var result: [String:AnyObject] = [:]
-        if let superMirror = mir.superclassMirror {
+        if let superMirror = mir.superclassMirror { //便利父类所有属性
             result = getResultFromMirror(mir: superMirror)
         }
         if (mir.children.count) > 0  {
             for case let (label?, value) in (mir.children) {
-                //print("属性：\(label)     值：\(value)")
-                if let jsonValue = value as? JSON {
+                //属性：label   值：value
+                if let jsonValue = value as? JSON { //如果value实现了JSON，继续向下解析
                     result[label] = jsonValue.toJSONModel()
                 }
             }
@@ -48,14 +61,14 @@ extension JSON {
         return result
     }
     
-    //将数据转成可用的JSON模型
+    /// 将数据转成可用的JSON模型
     func toJSONModel() -> AnyObject? {
         let mirror = Mirror(reflecting: self)
         if mirror.children.count > 0  {
             let result = getResultFromMirror(mir: mirror)
-            return result as AnyObject?
+            return result as AnyObject?  //有属性的对象，返回result是一个dic
         }
-        return self as AnyObject?
+        return self as AnyObject?  //基础数据类型，返回自己
     }
     
     //将数据转成JSON字符串
@@ -85,8 +98,6 @@ extension Optional: JSON {
         return nil
     }
 }
-
-
 
 //扩展Swift的基本数据类型，使其遵循JSON协议
 extension String: JSON { }
@@ -130,6 +141,9 @@ class JSONModel: NSObject, JSON, NSCoding {
     }
     
     
+    /// 得到所有的属性及其对应的value组成dic，注意value不一定全是基础数据类型，可能是其他自定义对象。同时，dic中存储的都是有值的属性，那些没有赋值的属性不会出现在dic中
+    ///
+    /// - Returns: dic
     func codablePropertieValues() -> [String:AnyObject] {
         var codableProperties = [String:AnyObject]()
         let mirror = Mirror(reflecting: self)
@@ -137,6 +151,7 @@ class JSONModel: NSObject, JSON, NSCoding {
         return codableProperties
     }
     
+    //便利所有的属性列表，将所有的属性存储到数组中
     func getPropertiesWithMirror(mir : Mirror) -> [String] {
         var result: [String] = []
         if let superMirror = mir.superclassMirror {
@@ -148,7 +163,7 @@ class JSONModel: NSObject, JSON, NSCoding {
         return result
     }
     
-    
+    //便利所有的属性列表，将所有的属性存储到数组中
     func codableProperties() -> [String] {
         var codableProperties = [String]()
         let mirror = Mirror(reflecting: self)
@@ -156,6 +171,11 @@ class JSONModel: NSObject, JSON, NSCoding {
         return codableProperties
     }
     
+    
+    /// 将一个any类型的对象转化为可选类型
+    ///
+    /// - Parameter any: any 类型对象
+    /// - Returns: 可选值
     func unwrap(any: Any) -> Any? {
         let mirror = Mirror(reflecting: any)
         if mirror.displayStyle != .optional {
