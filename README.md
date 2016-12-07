@@ -29,7 +29,7 @@
          var accountID : Int = 0 //学号
      }
 
-     class SchoolStudent: JSONModel {
+     class SchoolStudent: Student {
          var schoolName : String? //学校名
          var schoolmates : [Student]? //校友
          var principal : User? //校长
@@ -37,9 +37,12 @@
      
 初始化：
     
-     //创建一个schoolstudent实例对象
+        //创建一个schoolstudent实例对象
         let schoolstudent = SchoolStudent()
         schoolstudent.schoolName = "清华大学"
+        schoolstudent.accountID = 1024
+        schoolstudent.name = "martin"
+        schoolstudent.age = 20
         
         let principal = User()
         principal.name = "校长"
@@ -52,15 +55,14 @@
         student1.name = "martin"
         student1.age = 25
         student1.emails = ["martin1@hangge.com","martin2@hangge.com"]
-
         
         let student2 = Student()
         student2.accountID = 2008
         student2.name = "james"
         student2.age = 26
         student2.emails = ["james1@hangge.com","james2@hangge.com"]
-        //添加动画
-        schoolstudent.schoolmates = [student1, student2] 
+        
+        schoolstudent.schoolmates = [student1, student2]
         
 测试打印JSON：这里实现了对象可打印，打印出来的即为对象转化后的JSON字符串，也可以调用 toJSONString() 方法
 
@@ -69,36 +71,39 @@
 输出结果：
 
      school student = {
-       "principal" : {
-         "name" : "adsdasd",
-          "age" : 200,
+     "name" : "martin",
+     "age" : 20,
+     "accountID" : 1024,
+     "schoolName" : "清华大学",
+     "schoolmates" : [
+       {
+         "name" : "martin",
+         "age" : 25,
+         "accountID" : 2009,
          "emails" : [
-           "hangge@hangge.com",
-           "system@hangge.com"
+           "martin1@hangge.com",
+           "martin2@hangge.com"
          ]
        },
-       "schoolName" : "beijing",
-       "schoolmates" : [
-         {
-           "name" : "hangge",
-           "age" : 100,
-           "accountID" : 2009,
-           "emails" : [
-             "hangge@hangge.com",
-             "system@hangge.com"
-           ]
-         },
-         {
-           "name" : "aaaaaa",
-           "age" : 50,
-           "accountID" : 2008,
-           "emails" : [
-             "asdgge@hangge.com",
-             "dsdsdm@hangge.com"
-           ]
-          }
-        ]
+       {
+         "name" : "james",
+         "age" : 26,
+         "accountID" : 2008,
+         "emails" : [
+           "james1@hangge.com",
+           "james2@hangge.com"
+         ]
+       }
+     ],
+     "principal" : {
+       "name" : "校长",
+       "age" : 60,
+       "emails" : [
+         "zhang@hangge.com",
+         "xiao@hangge.com"
+       ]
      }
+   }
      
 测试对象序列化：     
         
@@ -108,33 +113,36 @@
 输出结果：
      
      unarchiveObject = Optional({
-       "principal" : {
-         "name" : "校长",
-         "age" : 60,
+     "name" : "martin",
+     "age" : 20,
+     "accountID" : 1024,
+     "schoolName" : "清华大学",
+     "schoolmates" : [
+       {
+         "name" : "martin",
+         "age" : 25,
+         "accountID" : 2009,
          "emails" : [
-           "zhang@hangge.com",
-           "xiao@hangge.com"
+           "martin1@hangge.com",
+           "martin2@hangge.com"
          ]
        },
-       "schoolName" : "清华大学",
-       "schoolmates" : [
-         {
-           "name" : "martin",
-           "age" : 25,
-           "accountID" : 2009,
-           "emails" : [
-             "martin1@hangge.com",
-             "martin2@hangge.com"
-           ]
-         },
-         {
-           "name" : "james",
-           "age" : 26,
-           "accountID" : 2008,
-           "emails" : [
-             "james1@hangge.com",
-             "james2@hangge.com"
-           ]
-         }
+       {
+         "name" : "james",
+         "age" : 26,
+         "accountID" : 2008,
+         "emails" : [
+           "james1@hangge.com",
+           "james2@hangge.com"
+         ]
+       }
+     ],
+     "principal" : {
+       "name" : "校长",
+       "age" : 60,
+       "emails" : [
+         "zhang@hangge.com",
+         "xiao@hangge.com"
        ]
+     }
      })

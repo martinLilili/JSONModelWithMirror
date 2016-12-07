@@ -100,6 +100,9 @@ class ViewController: UIViewController {
         //创建一个schoolstudent实例对象
         let schoolstudent = SchoolStudent()
         schoolstudent.schoolName = "清华大学"
+        schoolstudent.accountID = 1024
+        schoolstudent.name = "martin"
+        schoolstudent.age = 20
         
         let principal = User()
         principal.name = "校长"

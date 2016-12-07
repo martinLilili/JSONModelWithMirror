@@ -122,13 +122,20 @@ extension Array: JSON {
     }
 }
 
-//MARK: - JSONModel
-class JSONModel: NSObject, JSON, NSCoding {
+
+//得到所有的属性即value
+protocol PropertieValues {
+    /// 得到所有的属性及其对应的value组成dic，注意value不一定全是基础数据类型，可能是其他自定义对象。同时，dic中存储的都是有值的属性，那些没有赋值的属性不会出现在dic中
+    ///
+    /// - Returns: dic
+    func codablePropertieValues() -> [String:AnyObject]
     
-    override init() {
-        
-    }
-    
+    //遍历所有的属性列表，将所有的属性存储到数组中
+    func codableProperties() -> [String]
+}
+
+//MARK: - PropertieValues协议
+extension PropertieValues {
     func getPropertieValuesWithMirror(mir : Mirror) -> [String:AnyObject] {
         var result: [String:AnyObject] = [:]
         if let superMirror = mir.superclassMirror {
@@ -151,7 +158,7 @@ class JSONModel: NSObject, JSON, NSCoding {
         return codableProperties
     }
     
-    //便利所有的属性列表，将所有的属性存储到数组中
+    //遍历所有的属性列表，将所有的属性存储到数组中
     func getPropertiesWithMirror(mir : Mirror) -> [String] {
         var result: [String] = []
         if let superMirror = mir.superclassMirror {
@@ -163,7 +170,7 @@ class JSONModel: NSObject, JSON, NSCoding {
         return result
     }
     
-    //便利所有的属性列表，将所有的属性存储到数组中
+    //遍历所有的属性列表，将所有的属性存储到数组中
     func codableProperties() -> [String] {
         var codableProperties = [String]()
         let mirror = Mirror(reflecting: self)
@@ -186,6 +193,14 @@ class JSONModel: NSObject, JSON, NSCoding {
             return value
         }
         return nil
+    }
+}
+
+//MARK: - JSONModel
+class JSONModel: NSObject, JSON, NSCoding, PropertieValues {
+    
+    override init() {
+        
     }
     
     override public var description: String {
