@@ -3,12 +3,11 @@ Pod::Spec.new do |s|
 
 
   s.name         = "JSONModelWithMirror"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "user mirror to cover a object to a son string"
   s.homepage     = "https://github.com/martinLilili/JSONModelWithMirror"
-  s.license      = "MIT"
   s.author             = { "martin" => "liyue5232+li@gmail.com" }
-
+  s.license = { :type => "MIT", :file => "LICENSE" }
   s.source       = { :git => "https://github.com/martinLilili/JSONModelWithMirror.git", :tag => s.version }
 
   s.ios.deployment_target = '8.0'
