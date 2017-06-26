@@ -2,15 +2,15 @@
 使用Mirror创建基类，详细文档：[使用Mirror实现自定义对象转JSON及对象序列化](http://moonlspace.com/2016/12/%E4%BD%BF%E7%94%A8Mirror%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1%E8%BD%ACJSON%E5%8F%8A%E5%AF%B9%E8%B1%A1%E5%BA%8F%E5%88%97%E5%8C%96/)
 
 只需要继承基类即可实现对象转JSON的方法，实现对象可打印，
-实现NSCoding协议，支持序列化
+实现NSCoding协议，支持序列化。
 
-注意要实现对象序列化，类中基础类型不要用可选类型，否则会crash，如Int？，自定义的结构等
+注意要实现对象序列化，类中基础类型不要用可选类型，否则会crash，如Int？，也不能有自定义的结构等。
 
-注：根据喵神的观点，不建议使用Mirror来做很多事情，读者可自行选择
+注：根据喵神的观点，不建议使用Mirror来做很多事情，读者可自行选择。
 
 
 ### 需求
-实现一个基类Model，继承它的类不需要再写代码即可实现对象转json即对象序列化
+实现一个基类Model，继承它的类不需要再写代码即可实现对象转json及对象序列化。
 
 ### 实现效果如下
 基类为JSONModel，为了测试其健壮性，下面的例子写了一些嵌套关系
@@ -146,3 +146,18 @@
        ]
      }
      })
+
+
+
+## Installation
+
+### CocoaPods
+
+     pod 'JSONModelWithMirror', '~> 0.0.3'
+     
+     
+## Release note
+
+### 0.0.4
+
+主要适配swift 4，最主要的就是在基类前添加 @objcMembers 关键字，在swift3中，如果你用 Swift 写的 class 是继承自 NSObject 的话，Swift 会默认自动为所有的非 private 的类和成员加上 @objc，但在swift4中这个特性没有了，我们只能手动在类前面加上@objcMembers，或者在想要具有动态特性的属性或方法前加上@objc，这可能是苹果为了继续分离swift和oc所做的修改，也就是说继承自NSObject的类也不具备动态特性，想要使用必须声明。

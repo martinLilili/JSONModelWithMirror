@@ -226,7 +226,7 @@ public extension PropertieValues {
 }
 
 //MARK: - JSONModel
-open class JSONModel: NSObject, JSON, NSCoding, PropertieValues {
+@objcMembers open class JSONModel: NSObject, JSON, NSCoding, PropertieValues {
     
     override public init() {
         
