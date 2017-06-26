@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "JSONModelWithMirror"
-  s.version      = "0.0.4"
+  s.version      = "0.0.5"
   s.summary      = "user mirror to cover a object to a son string"
   s.homepage     = "https://github.com/martinLilili/JSONModelWithMirror"
   s.author             = { "martin" => "liyue5232+li@gmail.com" }
