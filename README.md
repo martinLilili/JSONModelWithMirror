@@ -160,4 +160,6 @@
 
 ### 0.0.4
 
-主要适配swift 4，最主要的就是在基类前添加 @objcMembers 关键字，在swift3中，如果你用 Swift 写的 class 是继承自 NSObject 的话，Swift 会默认自动为所有的非 private 的类和成员加上 @objc，但在swift4中这个特性没有了，我们只能手动在类前面加上@objcMembers，或者在想要具有动态特性的属性或方法前加上@objc，这可能是苹果为了继续分离swift和oc所做的修改，也就是说继承自NSObject的类也不具备动态特性，想要使用必须声明。
+主要适配swift 4，最主要的就是在基类前添加 @objcMembers 关键字.
+
+在swift3中，如果你用 Swift 写的 class 是继承自 NSObject 的话，Swift 会默认自动为所有的非 private 的类和成员加上 @objc，但在swift4中这个特性没有了，我们只能手动在类前面加上@objcMembers(swift 3.2才加入的关键字)，或者在想要具有动态特性的属性或方法前加上@objc，这可能是苹果为了继续分离swift和oc所做的修改，也就是说继承自NSObject的类也不具备动态特性，想要使用必须声明。
